@@ -1,0 +1,18 @@
+<h1>Depoimentos</h1>
+<hr />
+<section id="testimonies">{{items}} {{pagination}}</section>
+<hr />
+<section id="form">
+  <h3>Envie seu formulario</h3>
+  <form action="?page=1" method="post">
+    <div class="form-group">
+      <label for="">Nome</label>
+      <input type="text" name="name" class="form-control" required />
+      <label for="">Mensagem</label>
+      <textarea class="form-control" name="message" rows="5"></textarea>
+      <div class="form-group mt-3">
+        <button type="submit" class="btn btn-success">Enviar</button>
+      </div>
+    </div>
+  </form>
+</section>

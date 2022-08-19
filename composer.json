@@ -1,0 +1,13 @@
+{
+	"name": "franklinhenrique/teste",
+	"description": "Projeto teste",
+	"require": {
+		"php": ">= 7.0",
+		"william-costa/dot-env": "^0.1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"app\\": "app/"
+		}
+	}
+}

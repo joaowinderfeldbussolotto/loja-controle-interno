@@ -1,0 +1,53 @@
+<form method ="post">
+  <h3>Cadastro de clientes</h3>
+  {{status}}
+
+  <div class="form-group">
+    <label>Nome</label>
+    <input type="text" class="form-control" name="name" required />
+  </div>
+  <div class="form-group">
+    <label>CPF</label>
+    <input type="text" class="form-control" name="cpf" placeholder = "Apenas numeros" required />
+  </div>
+  <div class="form-group">
+    <label>RG</label>
+    <input type="text" class="form-control" name="rg" placeholder = "Apenas numeros" required />
+  </div>
+  <div class="form-group">
+    <label>Estado civil</label>
+    <select class="form-control" id="civil_state" name="estado_civil">
+      <option name="Casada(o)">Casada(o)</option>
+      <option name="Solteira(o)" selected>Solteira(o)</option>
+    </select>
+  </div>
+
+  <div class="form-group" id="nameFoo" style="display: none">
+    <label>Conjuge</label>
+    <input type="text" class="form-control" name="spouse" />
+  </div>
+  <div class="form-group" id="filiacao">
+    <label>Filiação</label>
+    <input type="text" class="form-control" name="filiation" />
+  </div>
+
+  <div class="form-group">
+    <label>Data de nascimento</label>
+    <input type="date" class="form-control" name="birthday" required />
+  </div>
+
+  <div class="form-group">
+    <label>Telefone para contato</label>
+    <input type="text" class="form-control" name="cellphone_number" required />
+  </div>
+
+  <div class="form-group">
+    <label>Endereço</label>
+    <input type="text" class="form-control" name="address"  />
+  </div>
+  
+
+  <button type="submit" class="btn btn-success">Cadastrar</button>
+</form>
+</div>
+
