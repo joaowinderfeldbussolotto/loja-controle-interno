@@ -1,5 +1,6 @@
 <?php
     namespace app\Controller\Pages;
+    use app\Controller\Pages\Alert;
     use \app\Utils\View;
     use \app\Model\Entity\User;
     use \app\Session\User\Login as SessionUserLogin;
@@ -8,10 +9,7 @@ class Login extends Page{
 
 public static function getLogin($request, $errorMessage = null){
     $status = !is_null($errorMessage) ? 
-        View::render('pages/login/alert',[
-        'message' => $errorMessage,
-        'type' => 'danger'
-    ]) : '';
+        Alert::getError($errorMessage) : '';
     return  View::render('pages/login/login', [
         'status' => $status
     ]);

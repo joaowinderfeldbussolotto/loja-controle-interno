@@ -95,9 +95,11 @@ class Database{
    */
   public function execute($query,$params = []){
     try{
-      //print_r($query);
       $statement = $this->connection->prepare($query);
+  
+      //print_r($query);
       $statement->execute($params);
+
       return $statement;
     }catch(PDOException $e){
       die('ERROR: '.$e->getMessage());
@@ -156,10 +158,12 @@ class Database{
   public function update($where,$values){
     //DADOS DA QUERY
     $fields = array_keys($values);
-
+    // print_r($values);
+    // print_r($where);
+    // print_r($fields);
     //MONTA A QUERY
     $query = 'UPDATE '.$this->table.' SET '.implode('=?,',$fields).'=? WHERE '.$where;
-
+    //print_r($query);
     //EXECUTAR A QUERY
     $this->execute($query,array_values($values));
 

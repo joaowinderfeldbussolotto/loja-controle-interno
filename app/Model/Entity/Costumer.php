@@ -14,7 +14,7 @@ class Costumer{
 		public $address;
 		public $cellphone_number;
 
-		public function save(){
+	public function save(){
 
 				$this->id = (new Database('COSTUMERS'))->insert([
 					'name' => $this->name,
@@ -34,6 +34,43 @@ class Costumer{
 		public static function getCostumers($where = null, $order = null, $limit = null, $fields = '*'){
             return (new Database('COSTUMERS'))->select($where,$order,$limit,$fields);
 		}
+
+		public static function checkIfCostumerExists($cpf, $rg){
+			$query = "SELECT count (*) FROM COSTUMERS WHERE CPF = '".$cpf."' OR RG = '".$rg."'";
+			$result = (new Database('COSTUMERS'))->execute($query) ->fetchObject()->count;
+				
+			return $result == 0 ? false : true;
+		}
+
+		public static function getCostumerById($id){
+			return self::getCostumers('id = '.$id)->fetchObject(self::class);
+		}
+
+		public  function update(){
+
+			
+			return  (new Database('COSTUMERS'))->update('id = '.$this->id,[
+				'name' => $this->name,
+				'CIVIL_STATE' => $this->civil_state,
+				'SPOUSE' => $this->spouse,
+				'FILIATION' => $this->filiation,
+				'BIRTHDAY' => $this->birthday,
+				'ADDRESS' => $this->address,
+				'CELLPHONE_NUMBER' => $this->cellphone_number
+			  ]);
+  
+  
+	}
+
+
+		
+
+	public function delete ($id){
+		return (new Database('COSTUMERS'))->delete('id = '.$this->id);
+	}
+
+
+
 
 	
 }

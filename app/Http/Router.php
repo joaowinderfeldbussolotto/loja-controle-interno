@@ -161,7 +161,10 @@
                 }
             }
             //URL NÃO ENCONTRADA
-            throw new Exception("URL não encontrada", 404);
+            throw new Exception("<h1>URL não encontrada</h1> <a href=".URL.">Volte ao menu</a>", 404);
+            header('location:'.$URL);
+
+            
         }
 
         /*

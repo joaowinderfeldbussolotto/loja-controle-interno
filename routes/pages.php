@@ -24,6 +24,15 @@
     }
 ]);
 
+$obRouter-> post('/clientes', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Costumer::searchCostumers($request));
+    }
+]);
+
+
 $obRouter-> get('/cadastrarCliente', [
     'middlewares' => ['required-admin-login'],
 
@@ -39,6 +48,91 @@ $obRouter-> post('/cadastrarCliente', [
         return new Response(200, Pages\Costumer::insertCostumer($request));
     }
 ]);
+
+$obRouter-> get('/cliente/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Costumer::getEditCostumer($request, $id));
+    }
+]);
+
+$obRouter-> post('/cliente/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Costumer::setEditCostumer($request, $id));
+    }
+]);
+
+$obRouter-> get('/cliente/{id}/delete', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Costumer::getDeleteCostumer($request, $id));
+    }
+]);
+
+
+
+   // Rota DINÂMICA
+   $obRouter-> get('/produtos', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Product::getProducts($request));
+    }
+]);
+
+$obRouter-> post('/produtos', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Product::searchProducts($request));
+    }
+]);
+
+
+$obRouter-> get('/cadastrarProduto', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Product::addProduct($request));
+    }
+]);
+
+$obRouter-> post('/cadastrarProduto', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Product::insertProduct($request));
+    }
+]);
+
+$obRouter-> get('/produto/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Product::getEditProduct($request, $id));
+    }
+]);
+
+$obRouter-> post('/produto/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Product::setEditProduct($request, $id));
+    }
+]);
+
+$obRouter-> get('/produto/{id}/delete', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Product::getDeleteProduct($request, $id));
+    }
+]);
+
 
 $obRouter-> get('/login', [
     'middlewares' => ['required-admin-logout'],
@@ -61,13 +155,7 @@ $obRouter-> get('/logout', [
     }
 ]);
 
-   $obRouter-> post('/depoimentos', [
-    'middlewares' => ['required-admin-login'],
 
-    function($request){
-        
-        return new Response(200, Pages\Testimony::insertTestimony($request));
-    }
-]);
+
 
 ?>

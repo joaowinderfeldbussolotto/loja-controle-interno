@@ -17,7 +17,6 @@
             return View::render('pages/page', [
                 'title' => $title,
                 'content' => $content,
-                'URL' => $content,
                 'name' => $_SESSION['login']['user']['name']
 
             ]);

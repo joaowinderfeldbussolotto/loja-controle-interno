@@ -1,0 +1,95 @@
+<script type="text/javascript">
+  function load() {
+    let element = document.getElementById('tipo')
+    element.value = '{{type}}'
+  }
+  window.onload = load
+</script>
+
+<form method="post">
+  <h3>{{option}}</h3>
+
+  {{status}}
+
+  <div class="form-group">
+    <label>Descrição</label>
+    <input
+      type="text-area"
+      class="form-control"
+      name="name"
+      value="{{description}}"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label>Marca</label>
+    <input
+      id="brand"
+      type="text"
+      class="form-control"
+      name="brand"
+      value="{{brand}}"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Tipo</label>
+    <select class="form-control" id="tipo" name="type">
+      <option value="1">Vestuário</option>
+      <option value="2" selected>Acessórios</option>
+      <option value="3">Cosméticos</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Tamanho</label>
+    <input
+      id="brand"
+      type="text"
+      class="form-control"
+      name="size"
+      value="{{size}}"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Cor</label>
+    <input
+      id="brand"
+      type="text"
+      class="form-control"
+      name="color"
+      value="{{color}}"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Preço</label>
+    <input
+      id="brand"
+      type="number"
+      class="form-control"
+      name="price"
+      value="{{price}}"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Quantidade</label>
+    <input
+      id="brand"
+      type="number"
+      min="1"
+      class="form-control"
+      name="quantity"
+      value="{{quantity}}"
+      required
+    />
+  </div>
+
+  <button type="submit" class="btn btn-success">Enviar</button>
+</form>
