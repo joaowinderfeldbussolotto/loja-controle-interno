@@ -1,0 +1,104 @@
+{{products}}
+<script type="text/javascript">
+  function load() {
+
+    let element = document.getElementById('payment_method')
+    element.value = '{{payment_method}}'
+    p = document.getElementById('id_products')
+    console.log(p.value)
+    p.value = '{{id_product}}'
+    console.log(p.value)
+
+  }
+  window.addEventListener('load', function () {
+  loadOptions()
+})
+  window.addEventListener('load', function () {
+  load()
+})
+
+
+
+
+</script>
+
+<form method="post" name="add_name" id="add_name">
+  <h3>{{option}}</h3>
+
+  {{status}} {{datalist}}
+  <div class="form-group">
+    <label>Método de pagamento</label>
+    <select  class="form-control" id="payment_method" name="payment_method">
+      <option value="1" selected>Á vista: cartão</option>
+      <option value="2">Á vista: dinheiro</option>
+      <option value="3">Prazo: Cartão</option>
+      <option value="4">Prazo: crediário da loja</option>
+    </select>
+  </div>
+
+  <div class="form-group"> 
+  <br />  
+  <br />  
+  <h2 >Produtos</h2>  
+  <div class="form-group">  
+       <form name="add_name" id="add_name">  
+            <div class="table-responsive">  
+                 <table class="table table-bordered" id="dynamic_field">  
+                      <tr>  
+                           <td><select onchange="setPrice(this.value, null)" id="id_products" name="products[]" class="form-control name_list" ></td>
+                            
+                        <td>
+                        <input
+                        id="price"
+                        type="number"
+                        class="form-control"
+                        name="price[]"
+                        value="{{price}}"
+                        readonly
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                      id="quantity"
+                      type="number"
+                      class="form-control"
+                      name="quantity[]"
+                      min ="1"
+                      max = "15"
+                      value="{{quantity}}"
+                      placeholder="Quantidade"
+                      required
+                      
+                    />
+                  </td>
+
+                  
+                  <td>
+                    <input
+                    id="discount[]"
+                    type="number"
+                    class="form-control"
+                    name="discount[]"
+                    value="{{discount}}"
+                    placeholder="Desconto"
+                    required
+                  />
+                </td>
+                    <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>  
+                  </tr>
+
+                  {{products_sale}}
+
+                 </table>  
+                 <button type="submit" class="btn btn-success">Enviar</button>
+                </div>  
+       </form>  
+  </div>  
+</div>  
+</body>  
+</html>  
+
+<script src="/resources/view/pages/sale/script.js"></script>
+
+

@@ -121,7 +121,6 @@
             $postVars = $request->getPostVars();
             $obProduct = new EntityProduct;
             $obProduct->id = $id;
-            $obProduct= new EntityProduct;
             $obProduct->description = $postVars['description'] ?? $obProduct->description;
             $obProduct->brand = $postVars['brand'] ?? $obProduct->brand;
             $obProduct->type = $postVars['type'] ?? $obProduct->type;

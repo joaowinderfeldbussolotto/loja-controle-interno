@@ -1,0 +1,52 @@
+<h1 class="h3 mb-2 text-gray-800">Vendas</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <a class="btn btn-success" href="/cadastrarVenda" role="button"
+      >Cadastrar nova venda</a
+    >
+    <form
+      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+      method="post"
+    >
+      <div class="input-group">
+        <input
+          name="search_name"
+          type="text"
+          class="form-control bg-light border-0 small"
+          placeholder="{{search_name}}"
+          aria-label="Search"
+          aria-describedby="basic-addon2"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fas fa-search fa-sm"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    {{status}}
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Cliente</th>
+            <th>Produtos</th>
+            <th>Metódo de pagamento</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+
+        {{items}}
+      </table>
+      {{pagination}}
+    </div>
+  </div>
+</div>

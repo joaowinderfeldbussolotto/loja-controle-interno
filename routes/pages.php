@@ -134,6 +134,58 @@ $obRouter-> get('/produto/{id}/delete', [
 ]);
 
 
+$obRouter->get('/cadastrarVenda', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Sale::addSale($request));
+    }
+]);
+
+$obRouter->post('/cadastrarVenda', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Sale::insertSale($request));
+    }
+]);
+
+
+$obRouter-> get('/vendas', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Sale::getSales($request));
+    }
+]);
+
+$obRouter-> post('/vendas', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Sale::searchSales($request));
+    }
+]);
+
+$obRouter-> get('/venda/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Sale::getEditSale($request, $id));
+    }
+]);
+
+$obRouter-> post('/venda/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Sale::setEditSale($request, $id));
+    }
+]);
+
+
+
+
 $obRouter-> get('/login', [
     'middlewares' => ['required-admin-logout'],
     function($request){

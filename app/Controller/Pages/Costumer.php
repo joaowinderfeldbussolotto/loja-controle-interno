@@ -141,7 +141,6 @@
             $obCostumer->address = $postVars['address'] ?? $obCostumer->address;
 
             if(!$obCostumer->update() instanceof EntityCostumer){
-                print_r('aaa');
                 return self::getCostumers($request, "Cliente atualizado com sucesso!");
             }
             else{

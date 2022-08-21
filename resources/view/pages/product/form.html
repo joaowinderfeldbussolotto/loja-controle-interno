@@ -3,7 +3,9 @@
     let element = document.getElementById('tipo')
     element.value = '{{type}}'
   }
-  window.onload = load
+  window.addEventListener('load', function () {
+    load()
+  })
 </script>
 
 <form method="post">
@@ -16,7 +18,7 @@
     <input
       type="text-area"
       class="form-control"
-      name="name"
+      name="description"
       value="{{description}}"
       required
     />
