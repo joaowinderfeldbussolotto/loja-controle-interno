@@ -183,6 +183,73 @@ $obRouter-> post('/venda/{id}/edit', [
     }
 ]);
 
+$obRouter-> get('/venda/{id}/delete', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Sale::getDeleteSale($request, $id));
+    }
+]);
+
+
+$obRouter->get('/cadastrarPagamento', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Payment::addPayment($request));
+    }
+]);
+
+$obRouter->post('/cadastrarPagamento', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Payment::insertPayment($request));
+    }
+]);
+
+
+$obRouter-> get('/pagamentos', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Payment::getPayments($request));
+    }
+]);
+
+$obRouter-> post('/pagamentos', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request){
+        return new Response(200, Pages\Payment::searchPayments($request));
+    }
+]);
+
+$obRouter-> get('/pagamento/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Payment::getEditPayment($request, $id));
+    }
+]);
+
+$obRouter-> post('/pagamento/{id}/edit', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Payment::setEditPayment($request, $id));
+    }
+]);
+
+$obRouter-> get('/pagamento/{id}/delete', [
+    'middlewares' => ['required-admin-login'],
+
+    function($request, $id){
+        return new Response(200, Pages\Payment::getDeletePayment($request, $id));
+    }
+]);
+
+
 
 
 

@@ -165,26 +165,6 @@
             }
 
             return self::getForm($request, $status, "Editar cliente", $obCostumer);
-
-
-           
-
-        //     $content =  View::render('pages/costumer/form', [ 
-        //         'option' => 'Editar cliente',
-        //         'status' => $status,
-        //         'costumer_name' => $obCostumer->name,
-        //         'cpf' => $obCostumer->cpf,
-        //         'rg' => $obCostumer->rg,
-        //         'civil_state' => $obCostumer->civil_state,
-        //         'spouse' => $obCostumer->spouse,
-        //         'filiation' => $obCostumer->filiation,
-        //         'birthday' => date("Y-m-d", strtotime($$obCostumer->birthday));  
-        //         'cellphone_number' => $obCostumer->cellphone_number,
-        //         'address' => $obCostumer->address,
-        //  ]);
-
-        //     //return self::addCostumer($request, null, $obCostumer);
-        //     return parent::getPage("Editar clientes", $content);
         }
 
         public static function searchCostumers($request){

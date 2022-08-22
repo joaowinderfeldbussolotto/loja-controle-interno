@@ -1,0 +1,90 @@
+<script type="text/javascript">
+  
+
+  function onClickCheckBox(){
+      const checkbox = document.getElementById('checkbox')
+      let payer = document.getElementById('payer')
+    
+      if(checkbox.checked){
+          payer.style.display = 'block'
+      }
+      else{
+        console.log('else')
+        payer.style.display = 'none'
+      }
+  }
+   
+  
+
+
+  function load() {
+    let element = document.getElementById('payment_method')
+    element.value = '{{payment_method}}'
+  }
+ 
+  window.addEventListener('load', function () {
+    load()
+  })
+
+
+
+
+</script>
+
+<form method="post">
+  <h3>{{option}}</h3>
+
+  {{status}}
+  {{datalist}}
+
+  <div class="form-group">
+    <label>Data</label>
+    <input
+      type="date"
+      class="form-control"
+      name="date"
+      value="{{date}}"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label>Valor</label>
+    <input
+      id="brand"
+      type="number"
+      min = "0"
+      class="form-control"
+      name="value"
+      value="{{value}}"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Método de pagamento</label>
+    <select  class="form-control" id="payment_method" name="payment_method">
+      <option value="1" selected>Á vista: cartão</option>
+      <option value="2">Á vista: dinheiro</option>
+      <option value="3">Prazo: Cartão</option>
+      <option value="4">Prazo: crediário da loja</option>
+    </select>
+  <label>Cliente não é o pagador?</label>
+  <div class="form-group">
+    <input
+      type = 'checkbox'
+      id="checkbox"
+      type="text"
+      onclick="onClickCheckBox()"
+      class="form-control"
+      name="size"
+      {{checked}}
+    />
+  </div>
+
+  <div class="form-group" id="payer" style="display: none">
+    <label>Pagador</label>
+    <input " type="text" class="form-control" name="payer" value="{{payer}}" />
+  </div>
+
+  <button type="submit" class="btn btn-success">Enviar</button>
+</form>

@@ -42,15 +42,14 @@ function getOptions() {
 }
 
 function setPrice(product_id, i) {
-  if (i == null) {
+  if (i == 0) {
     price_id = 'price'
     quantity_id = 'quantity'
   } else {
     price_id = 'price' + i
     quantity_id = 'quantity' + i
   }
-  price_id = 'price' + i
-  quantity_id = 'quantity' + i
+
   for (var j = 0; j < Object.keys(products).length; j++) {
     if (products[j][0] == product_id) {
       document.getElementById(price_id).value = products[j][1]

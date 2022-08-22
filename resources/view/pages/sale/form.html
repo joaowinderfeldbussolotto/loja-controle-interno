@@ -1,5 +1,5 @@
 {{products}}
-<script type="text/javascript">
+<script>
   function load() {
 
     let element = document.getElementById('payment_method')
@@ -45,7 +45,7 @@
             <div class="table-responsive">  
                  <table class="table table-bordered" id="dynamic_field">  
                       <tr>  
-                           <td><select onchange="setPrice(this.value, null)" id="id_products" name="products[]" class="form-control name_list" ></td>
+                           <td><select onchange="setPrice(this.value, 0)" id="id_products" name="products[]" class="form-control name_list" ></td>
                             
                         <td>
                         <input

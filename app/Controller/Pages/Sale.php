@@ -44,7 +44,9 @@
                     'payment_method' => $obSale['payment_description'],
                     'status' => $obSale['status'],
                     'date' => $obSale['date'],
-                    'products' => $obSale['products']
+                    'products' => $obSale['products'],
+                    'total_amount' => $obSale['total_amount'],
+                    'left_for_pay' => $obSale['left_for_pay'],
                 ]);
             }
             return $items;
@@ -66,21 +68,7 @@
             return parent::getPage("Vendas", $content);
         }
         
-        public static function getCostumerDataList(){
-            $obCostumers = Costumer::getCostumers();
-            $datalist = ' <div class="form-group">
-                          <label>Cliente</label>
-                        <input list="costumers" class="form-control" id="id_costumer" name="id_costumer"> <datalist id = "costumers">';
-            $results = $obCostumers;
-            while($obCostumer = $results->fetchObject(Costumer::class)){
-                $datalist.= '<option value="'.$obCostumer->id.'">'.$obCostumer->name.'</option>';
-
-            }
-            $datalist.= '</datalist></input>
-            </div>';
-            return $datalist;
-
-        }
+        
 
         public static function getProducts(){
             $results = Product::getProducts();
@@ -106,7 +94,7 @@
 
         public static function getForm($request, $status, $title, $obSale = null, $products_html = null, $first = null){
             $content =  View::render('pages/sale/form', [ 
-                'datalist' => is_null($obSale) ? self::getCostumerDataList() : '<input type="text"class="form-control" name="id_costumer" value="'.$obSale->id_costumer    .'" readonly />',
+                'datalist' => is_null($obSale) ? Costumer::getCostumerDataList() : '<input type="text"class="form-control" name="id_costumer" value="'.$obSale->id_costumer    .'" readonly />',
                 'option' => $title,
                 'status' => $status,
                 'payment_method' => is_null($obSale)? '1' : $obSale->payment_method,
@@ -272,7 +260,7 @@
             }
 
             if($obSale->delete($id)){
-                return self::getSales($request, "Cliente deletado com sucesso!");
+                return self::getSales($request, "Venda deletada com sucesso!");
             }
 
         }

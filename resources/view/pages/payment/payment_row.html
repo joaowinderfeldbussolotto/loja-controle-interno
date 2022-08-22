@@ -2,17 +2,14 @@
   <tr>
     <td>{{id}}</td>
     <td>{{costumer_name}}</td>
-    <td>{{products}}</td>
-    <td>{{payment_method}}</td>
-    <td>{{status}}</td>
+    <td>{{value}}</td>
     <td>{{date}}</td>
-    <td>{{total_amount}}</td>
-    <td>{{left_for_pay}}</td>
+    <td>{{payment_description}}</td>
 
     <td>
       <li class="list-inline-item">
         <a
-          href="/venda/{{id}}/edit"
+          href="/pagamento/{{id}}/edit"
           class="btn btn-success btn-sm rounded-0"
           type="button"
           data-toggle="tooltip"
@@ -23,7 +20,7 @@
       </li>
       <li class="list-inline-item">
         <a
-          href="/venda/{{id}}/delete"
+          href="/pagamento/{{id}}/delete"
           class="btn btn-danger btn-sm rounded-0"
           type="button"
           data-toggle="tooltip"

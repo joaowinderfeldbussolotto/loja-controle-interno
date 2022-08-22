@@ -62,7 +62,7 @@ class SaleProducts{
   
 	}
 
-	    public function deleteAllFromSaleID ($sale_id){
+	    public static function deleteAllFromSaleID ($sale_id){
           $allsp = (new Database)->execute('SELECT * FROM SALES_PRODUCT WHERE ID_SALE = '.$sale_id);
           while($sp = $allsp->fetchObject(self::class)){
             $query =  'UPDATE PRODUCTS SET QUANTITY = QUANTITY +'.$sp->quantity.'WHERE ID = '.$sp->id_product;

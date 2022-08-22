@@ -69,6 +69,22 @@ class Costumer{
 		return (new Database('COSTUMERS'))->delete('id = '.$this->id);
 	}
 
+	public static function getCostumerDataList(){
+		$obCostumers = self::getCostumers();
+		$datalist = ' <div class="form-group">
+									<label>Cliente</label>
+								<input list="costumers" class="form-control" id="id_costumer" name="id_costumer"> <datalist id = "costumers">';
+		$results = $obCostumers;
+		while($obCostumer = $results->fetchObject(Costumer::class)){
+				$datalist.= '<option value="'.$obCostumer->id.'">'.$obCostumer->name.'</option>';
+
+		}
+		$datalist.= '</datalist></input>
+		</div>';
+		return $datalist;
+
+}
+
 
 
 

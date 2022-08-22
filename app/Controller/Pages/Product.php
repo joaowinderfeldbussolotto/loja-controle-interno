@@ -124,7 +124,7 @@
             $obProduct->description = $postVars['description'] ?? $obProduct->description;
             $obProduct->brand = $postVars['brand'] ?? $obProduct->brand;
             $obProduct->type = $postVars['type'] ?? $obProduct->type;
-            $obProduct->size = $postVars['size'] ?? $obProduct->descrsizeiption;
+            $obProduct->size = $postVars['size'] ?? $obProduct->size;
             $obProduct->color = $postVars['color'] ??  $obProduct->color ;
             $obProduct->price = $postVars['price'] ??  $obProduct->price;
             $obProduct->quantity = $postVars['quantity'] ??  $obProduct->quantity;
@@ -135,7 +135,7 @@
             }
             else{
                 $status = Alert::getError("Não foi possível editar!");
-                return self::getForm($request, $status, "Produto cliente", $obProduct);
+                return self::getForm($request, $status, "Editar produto", $obProduct);
 
             }
 
