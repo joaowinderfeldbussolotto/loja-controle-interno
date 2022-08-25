@@ -11,6 +11,7 @@ public static function getLogin($request, $errorMessage = null){
     $status = !is_null($errorMessage) ? 
         Alert::getError($errorMessage) : '';
     return  View::render('pages/login/login', [
+        'title' => 'Login',
         'status' => $status
     ]);
     }

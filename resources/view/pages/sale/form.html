@@ -10,9 +10,7 @@
     console.log(p.value)
 
   }
-  window.addEventListener('load', function () {
-  loadOptions()
-})
+
   window.addEventListener('load', function () {
   load()
 })
@@ -25,7 +23,8 @@
 <form method="post" name="add_name" id="add_name">
   <h3>{{option}}</h3>
 
-  {{status}} {{datalist}}
+  {{status}} 
+  {{datalist}}
   <div class="form-group">
     <label>Método de pagamento</label>
     <select  class="form-control" id="payment_method" name="payment_method">
@@ -45,7 +44,7 @@
             <div class="table-responsive">  
                  <table class="table table-bordered" id="dynamic_field">  
                       <tr>  
-                           <td><select onchange="setPrice(this.value, 0)" id="id_products" name="products[]" class="form-control name_list" ></td>
+                           <td><input type ="number" placeholder = "Código" value = "{{id_product}}"  min = "0"  onchange="setPrice(this.value, 0)" id="id_products" name="products[]"   class="form-control" ></td>
                             
                         <td>
                         <input

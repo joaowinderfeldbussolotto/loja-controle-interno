@@ -38,6 +38,20 @@
   {{datalist}}
 
   <div class="form-group">
+   <label>Código da venda</label>
+   <input
+     id="brand"
+     type="number"
+     min = "0"
+     class="form-control"
+     name="id_sale"
+     value="{{id_sale}}"
+     {{readonly}}
+     required
+   />
+ </div>
+
+  <div class="form-group">
     <label>Data</label>
     <input
       type="date"

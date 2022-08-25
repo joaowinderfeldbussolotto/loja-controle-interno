@@ -18,7 +18,6 @@ class SaleProducts{
 
 
 	public function save(){
-        $this->setTotalAmount();
         $query =  'UPDATE PRODUCTS SET QUANTITY = QUANTITY -'.$this->quantity.'WHERE ID = '.$this->id_product;
         (new Database)->execute($query);
 				$this->id = (new Database('SALES_PRODUCT'))->insert([

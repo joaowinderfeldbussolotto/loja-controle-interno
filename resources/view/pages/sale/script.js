@@ -26,20 +26,9 @@ $(document).ready(function () {
     $('#row' + button_id + '').remove()
   })
 })
-function loadOptions() {
-  products.forEach(p => {
-    document.getElementById('id_products').add(new Option(p[0], p[0]))
-  })
-}
 
-function getOptions() {
-  var str = ''
-  products.forEach(p => {
-    str += '<option value ="' + p[0] + '">' + p[0] + '</option>'
-  })
-  console.log(str)
-  return str
-}
+
+
 
 function setPrice(product_id, i) {
   if (i == 0) {
