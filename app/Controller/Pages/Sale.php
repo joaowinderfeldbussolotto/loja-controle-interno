@@ -220,6 +220,8 @@ class Sale extends Page
       $obSale->id_costumer = $postVars['id_costumer'];
       $obSale->payment_method = $postVars['payment_method'];
       $obSale->salesProducts = $salesProducts;
+
+      return self::validate($request, $obSale, true);
    }
 
 
@@ -246,7 +248,7 @@ class Sale extends Page
             $products_html .=
                '<tr id="row' .
                $i .
-               '"> <td>  <td><input type ="number" placeholder = "Código" value = "' . $obSale['id_product'] . '"  min = "0"  onchange="setPrice(this.value, 0)" id="id_products" name="products[]"   class="form-control" ></td>  <input id="price' .
+               '">   <td><input type ="number" placeholder = "Código" value = "' . $obSaleProducts['id_product'] . '"  min = "0"  onchange="setPrice(this.value, 0)" id="id_products" name="products[]"   class="form-control" ></td> <td> <input id="price' .
                $i .
                '" type="number"class="form-control" name="price[]" value="' . $obSaleProducts['price'] . '" readonly /> </td> <td> <input id="quantity' .
                $i .

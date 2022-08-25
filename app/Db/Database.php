@@ -100,9 +100,9 @@ class Database
    public function execute($query, $params = [])
    {
       try {
+
          $statement = $this->connection->prepare($query);
          $statement->execute($params);
-
          return $statement;
       } catch (PDOException $e) {
          die('ERROR: ' . $e->getMessage());
@@ -127,7 +127,9 @@ class Database
       $this->execute($query, array_values($values));
 
       //RETORNA O ID INSERIDO
-      return $this->connection->lastInsertId();
+      if ($this->table != 'PRODUCTS') {
+         return $this->connection->lastInsertId();
+      }
    }
 
    /**

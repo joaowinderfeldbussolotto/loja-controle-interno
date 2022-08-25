@@ -86,7 +86,7 @@ class Product extends Page
 
    public static function validate($request, $obProduct)
    {
-      if ($obProduct instanceof EntityProduct) {
+      if (EntityProduct::getProductById($obProduct->id) instanceof EntityProduct) {
          return self::getForm($request, 'Produto com código ' . $obProduct->id . ' já cadastrado', 'Adicionar produto', null);
       }
       $obProduct->save();

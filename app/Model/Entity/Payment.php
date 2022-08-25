@@ -8,7 +8,6 @@ use \app\Model\Entity\Sale;
 class Payment
 {
    public $id;
-   public $id_costumer;
    public $id_sale;
    public $payment_method;
    public $value;
@@ -20,7 +19,6 @@ class Payment
    public function save()
    {
       $this->id = (new Database('PAYMENTS'))->insert([
-         'id_costumer' => $this->id_costumer,
          'id_sale' => $this->id_sale,
          'payment_method' => $this->payment_method,
          'value' => $this->value,
@@ -47,7 +45,6 @@ class Payment
    {
       Sale::payingSale($this->id_sale, $this->value);
       return (new Database('PAYMENTS'))->update('id = ' . $this->id, [
-         'id_costumer' => $this->id_costumer,
          'id_sale' => $this->id_sale,
          'payment_method' => $this->payment_method,
          'value' => $this->value,

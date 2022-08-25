@@ -19,7 +19,7 @@ class Product
    public function save()
    {
 
-      $this->id = (new Database('PRODUCTS'))->insert([
+      (new Database('PRODUCTS'))->insert([
          'id' => $this->id,
          'description' => $this->description,
          'brand' => $this->brand,

@@ -5,13 +5,11 @@ $(document).ready(function () {
     $('#dynamic_field').append(
       '<tr id="row' +
         i +
-        '"> <td><select onChange = "setPrice(this.value,' +
+        '"> <td><input type = "number" placeholder="código" onChange = "setPrice(this.value,' +
         i +
         ')" id="id_products' +
         i +
-        '" name="products[]" class="form-control name_list"> <option value = "">Produto</option>' +
-        getOptions() +
-        '<td>  <input id="price' +
+        '" name="products[]" class="form-control"</td> <td>  <input id="price' +
         i +
         '" type="number"class="form-control" name="price[]" value="" readonly /> </td> <td> <input id="quantity' +
         i +

@@ -14,23 +14,20 @@ class Sale
    public $status;
    public $salesProducts = [];
    public $total_amount = 0;
-   public $leftforpay = 0;
+   public $leftforpay;
 
    public function setStatus()
    {
       if ($this->payment_method == 1 or $this->payment_method == 2) {
          $payment = new Payment;
-         $payment->id_costumer =  $this->id_costumer;
+         $payment->id_sale =  $this->id;
          $payment->value = $this->total_amount;
          $payment->payment_method = $this->payment_method;
          $payment->payer = 'Cliente';
          $payment->date = date("d-m-Y");
          $payment->save();
-         $this->leftforpay = 0;
-         $this->status = 'Pago';
          return;
       }
-      $this->leftforpay = $this->total_amount;
       $this->status = 'Não pago';
    }
    public function save()
@@ -41,7 +38,10 @@ class Sale
          $a += $sp->total_amount;
       }
       $this->total_amount = $a;
-      $this->setStatus();
+      $this->leftforpay = $this->total_amount;
+
+      
+
       $this->id = (new Database('SALES'))->insert([
          'id_costumer' => $this->id_costumer,
          'payment_method' => $this->payment_method,
@@ -50,6 +50,9 @@ class Sale
          'LEFTFORPAY' => $this->leftforpay
 
       ]);
+      $this->setStatus();
+      
+
 
       foreach ($this->salesProducts as $sp) {
          $sp->id_sale = $this->id;
@@ -70,15 +73,26 @@ class Sale
       return self::getSales('id = ' . $id)->fetchObject(self::class);
    }
 
+   public  function setLeftForPay()
+   {
+      $total_payed = (new Database)->execute("SELECT SUM(VALUE) as payed FROM payments WHERE ID_SALE = " . $this->id)->fetch()['payed'];
+      return ($this->total_amount -  $total_payed);
+   }
+
    public  function update()
    {
       SaleProducts::deleteAllFromSaleId($this->id);
       foreach ($this->salesProducts as $sp) {
+         print_r($sp->total_amount);
          $sp->id_sale = $this->id;
          $sp->save($sp->id);
       };
       $this->total_amount = (new Database)->execute("SELECT SUM(TOTAL_AMOUNT) as TA FROM SALES_PRODUCT WHERE ID_SALE = " . $this->id)->fetch()['ta'];
-
+      if ($this->payment_method == 1 or $this->payment_method == 2) {
+         $this->leftforpay = 0;
+      } else {
+         $this->leftforpay =  $this->setLeftForPay();
+      }
 
       $this->setStatus();
 
@@ -95,13 +109,15 @@ class Sale
 
    public static function payingSale($id_sale, $value)
    {
-      $leftforpay = (new Database)->execute("SELECT LEFTFORPAY as LEFT FROM SALES_PRODUCT WHERE ID_SALE = " . $id_sale)->fetch()['LEFT'];
+      $leftforpay = (new Database)->execute("SELECT LEFTFORPAY as LEFT FROM SALES WHERE ID = " . $id_sale)->fetch()['left'];
+
       $leftforpay = $leftforpay - $value;
       $query = "UPDATE SALES SET LEFTFORPAY =  " . $leftforpay;
       if ($leftforpay <= 0) {
-         $query .= "STATUS = Pago ";
+         $query .= " , STATUS = 'Pago' ";
       }
-      $query .= "WHERE ID_SALE = " . $id_sale;
+      $query .= "WHERE ID = " . $id_sale;
+
       (new Database)->execute($query);
    }
 

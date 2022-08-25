@@ -54,31 +54,33 @@ class Payment extends Page
       return parent::getPage("Produtos", $content);
    }
 
-   public static function getCostumerFromQueryParams($request)
-   {
-      $id_costumer = $request->getQueryParams()['id_costumer'] ?? '';
+   // public static function getCostumerFromQueryParams($request)
+   // {
+   //    $id_costumer = $request->getQueryParams()['id_costumer'] ?? '';
 
-      $costumer_html = '';
-      if ($id_costumer != '') {
-         $costumer_html = '<div class="form-group">
-         <label>Código do cliente</label>
-         <input
-           id="id_costumer" type="text"   class="form-control" name="id_costumer" value= "' . $id_costumer . '" readonly
-         />
-       </div>';
-      }
-      return $costumer_html;
-   }
+   //    $costumer_html = '';
+   //    if ($id_costumer != '') {
+   //       $costumer_html = '<div class="form-group">
+   //       <label>Código do cliente</label>
+   //       <input
+   //         id="id_costumer" type="text"   class="form-control" name="id_costumer" value= "' . $id_costumer . '" readonly
+   //       />
+   //     </div>';
+   //    }
+   //    return $costumer_html;
+   // }
 
    public static function getForm($request, $status, $title, $obPayment = null)
    {
+
+
       $id_sale = $request->getQueryParams()['id_sale'] ?? '';
       if (is_null($id_sale)) {
          $id_sale = !is_null($obPayment) ? $obPayment->id_sale : '';
       }
       $content =  View::render('pages/payment/form', [
          'readonly' => $id_sale ? 'readonly' : '',
-         'datalist' => !is_null($obPayment) ? Costumer::getCostumerDataList() : self::getCostumerFromQueryParams($request),
+         // 'datalist' => is_null($obPayment) ? Costumer::getCostumerDataList() : self::getCostumerFromQueryParams($request),
          'option' => $title,
          'status' => $status,
          'costumer_id' => $obPayment->id_costumer ?? '',
@@ -116,8 +118,7 @@ class Payment extends Page
    {
       $postVars = $request->getPostVars();
       $obPayment = new EntityPayment;
-      $obPayment->id_costumer = $postVars['id_costumer'];
-      $obPayment->id_costumer = $postVars['id_sale'];
+      $obPayment->id_sale = $postVars['id_sale'];
       $obPayment->payment_method = $postVars['payment_method'];
       $obPayment->value = $postVars['value'];
       $obPayment->date = $postVars['date'];
