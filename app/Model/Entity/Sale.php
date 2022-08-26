@@ -84,20 +84,21 @@ class Sale
    {
       SaleProducts::deleteAllFromSaleId($this->id);
       foreach ($this->salesProducts as $sp) {
-         print_r($sp->total_amount);
          $sp->id_sale = $this->id;
          $sp->save($sp->id);
       };
       $this->total_amount = (new Database)->execute("SELECT SUM(TOTAL_AMOUNT) as TA FROM SALES_PRODUCT WHERE ID_SALE = " . $this->id)->fetch()['ta'];
       if ($this->payment_method == 1 or $this->payment_method == 2) {      
          $payment = new Payment;
+         $id_payment = (new Database)->execute("SELECT id as id FROM payments WHERE ID_SALE = " . $this->id)->fetch()['id'];
+         $payment::deleteById($id_payment);
          $payment->id_sale =  $this->id;
          $payment->value = $this->total_amount;
          $payment->payment_method = $this->payment_method;
          $payment->payer = 'Cliente';
          $payment->date = date("d-m-Y");
          $payment->save();
-         self::payingSale($this->id, $this->value);
+         self::payingSale($this->id, $this->total_amount);
       } else {
          $this->leftforpay =  $this->setLeftForPay();
       }

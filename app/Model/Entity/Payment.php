@@ -55,6 +55,13 @@ class Payment
    }
    public function delete($id)
    {
+
       return (new Database('PAYMENTS'))->delete('id = ' . $this->id);
+   }
+
+   public static function deleteById($id)
+   {
+
+      return (new Database('PAYMENTS'))->delete('id = ' . $id);
    }
 }

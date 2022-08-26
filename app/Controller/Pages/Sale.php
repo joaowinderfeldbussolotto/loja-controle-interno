@@ -45,11 +45,12 @@ class Sale extends Page
             'id_costumer' => $obSale['id_costumer'],
             'costumer_name' => $obSale['costumer_name'],
             'payment_method' => $obSale['payment_description'],
-            'status' => $obSale['status'],
             'date' => $obSale['date'],
             'products' => $obSale['products'],
             'total_amount' => $obSale['total_amount'],
             'left_for_pay' => $obSale['left_for_pay'],
+            'status' => $obSale['left_for_pay'] != 0 ? 'Não pago' :'Pago',
+
          ]);
       }
       return $items;
@@ -220,7 +221,6 @@ class Sale extends Page
       $obSale->id_costumer = $postVars['id_costumer'];
       $obSale->payment_method = $postVars['payment_method'];
       $obSale->salesProducts = $salesProducts;
-
       return self::validate($request, $obSale, true);
    }
 

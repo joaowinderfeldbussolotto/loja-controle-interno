@@ -102,6 +102,7 @@ class Database
       try {
 
          $statement = $this->connection->prepare($query);
+
          $statement->execute($params);
          return $statement;
       } catch (PDOException $e) {
