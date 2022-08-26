@@ -95,7 +95,7 @@ class Costumer extends Page
       //    return self::addCostumer($request, 'CPF inválido!');
       // }
       if ($obCostumer::checkIfCostumerExists($obCostumer->cpf, $obCostumer->rg)) {
-         return self::addCostumer($request, 'Cliente já cadastrado');
+         return self::addCostumer($request, 'CPF já cadastrado');
       } else {
          $obCostumer->save();
          return self::getCostumers($request, "Usuário cadastrado com sucesso!");
