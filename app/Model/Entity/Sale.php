@@ -19,13 +19,7 @@ class Sale
    public function setStatus()
    {
       if ($this->payment_method == 1 or $this->payment_method == 2) {
-         $payment = new Payment;
-         $payment->id_sale =  $this->id;
-         $payment->value = $this->total_amount;
-         $payment->payment_method = $this->payment_method;
-         $payment->payer = 'Cliente';
-         $payment->date = date("d-m-Y");
-         $payment->save();
+         $this->status = 'Pago';
          return;
       }
       $this->status = 'Não pago';
@@ -39,26 +33,33 @@ class Sale
       }
       $this->total_amount = $a;
       $this->leftforpay = $this->total_amount;
-
-      
-
+      $this->setStatus();
       $this->id = (new Database('SALES'))->insert([
          'id_costumer' => $this->id_costumer,
          'payment_method' => $this->payment_method,
-         'status' => $this->status,
+         'status' => $this->status, 
          'TOTAL_AMOUNT' => $this->total_amount,
          'LEFTFORPAY' => $this->leftforpay
 
       ]);
-      $this->setStatus();
-      
 
-
+     
+   
       foreach ($this->salesProducts as $sp) {
          $sp->id_sale = $this->id;
          $sp->save();
       }
-
+      
+      if($this->status == 'Pago'){
+         
+         $payment = new Payment;
+         $payment->id_sale =  $this->id;
+         $payment->value = $this->total_amount;
+         $payment->payment_method = $this->payment_method;
+         $payment->payer = 'Cliente';
+         $payment->date = date("d-m-Y");
+         $payment->save();
+      }
       return true;
    }
 
@@ -88,8 +89,15 @@ class Sale
          $sp->save($sp->id);
       };
       $this->total_amount = (new Database)->execute("SELECT SUM(TOTAL_AMOUNT) as TA FROM SALES_PRODUCT WHERE ID_SALE = " . $this->id)->fetch()['ta'];
-      if ($this->payment_method == 1 or $this->payment_method == 2) {
-         $this->leftforpay = 0;
+      if ($this->payment_method == 1 or $this->payment_method == 2) {      
+         $payment = new Payment;
+         $payment->id_sale =  $this->id;
+         $payment->value = $this->total_amount;
+         $payment->payment_method = $this->payment_method;
+         $payment->payer = 'Cliente';
+         $payment->date = date("d-m-Y");
+         $payment->save();
+         self::payingSale($this->id, $this->value);
       } else {
          $this->leftforpay =  $this->setLeftForPay();
       }
@@ -107,10 +115,12 @@ class Sale
       ]);
    }
 
+   
+
    public static function payingSale($id_sale, $value)
    {
       $leftforpay = (new Database)->execute("SELECT LEFTFORPAY as LEFT FROM SALES WHERE ID = " . $id_sale)->fetch()['left'];
-
+      
       $leftforpay = $leftforpay - $value;
       $query = "UPDATE SALES SET LEFTFORPAY =  " . $leftforpay;
       if ($leftforpay <= 0) {

@@ -51,6 +51,7 @@ class Payment
          'date' => $this->date,
          'payer' => $this->payer,
       ]);
+
    }
    public function delete($id)
    {

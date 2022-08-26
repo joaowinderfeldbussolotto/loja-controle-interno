@@ -20,6 +20,8 @@
   function load() {
     let element = document.getElementById('payment_method')
     element.value = '{{payment_method}}'
+    document.getElementById('date').value = '{{date}}'
+
   }
  
   window.addEventListener('load', function () {
@@ -53,10 +55,10 @@
   <div class="form-group">
     <label>Data</label>
     <input
+      id="date"
       type="date"
       class="form-control"
       name="date"
-      value="{{date}}"
       required
     />
   </div>

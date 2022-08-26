@@ -5,6 +5,7 @@ namespace app\Controller\Pages;
 use \app\Utils\View;
 use \app\Model\Entity\Costumer;
 use \app\Model\Entity\Payment as EntityPayment;
+use \app\Model\Entity\Sale as EntitySale;
 use \app\Db\Pagination;
 use \app\Db\Database;
 use \app\Controller\Pages\Alert;
@@ -15,7 +16,7 @@ class Payment extends Page
    {
       $items  = '';
       $totalQuantity = EntityPayment::getPayments(null, null, null, 'count (*) as quantity')->fetchObject()->quantity;
-      !is_null($key) ? $where = "id = " . $key : $where = '';
+      !is_null($key) ? $where = "id_sale = " . $key : $where = '';
       $queryParams = $request->getQueryParams();
       $currentPage = $queryParams['page'] ?? 1;
       //INSTANCIA DE PAGINAÇÃO
@@ -43,7 +44,6 @@ class Payment extends Page
    {
 
       $status = !is_null($errorMessage) ? Alert::getSuccess($errorMessage) : '';
-
       $content =  View::render('pages/payment/payments', [
          'items' => self::getPaymentItems($request, $obPagination, $key),
          'pagination' => parent::getPagination($request, $obPagination),
@@ -54,41 +54,21 @@ class Payment extends Page
       return parent::getPage("Produtos", $content);
    }
 
-   // public static function getCostumerFromQueryParams($request)
-   // {
-   //    $id_costumer = $request->getQueryParams()['id_costumer'] ?? '';
-
-   //    $costumer_html = '';
-   //    if ($id_costumer != '') {
-   //       $costumer_html = '<div class="form-group">
-   //       <label>Código do cliente</label>
-   //       <input
-   //         id="id_costumer" type="text"   class="form-control" name="id_costumer" value= "' . $id_costumer . '" readonly
-   //       />
-   //     </div>';
-   //    }
-   //    return $costumer_html;
-   // }
-
    public static function getForm($request, $status, $title, $obPayment = null)
    {
-
-
-      $id_sale = $request->getQueryParams()['id_sale'] ?? '';
-      if (is_null($id_sale)) {
+      $id_sale = $request->getQueryParams()['id_sale'] ?? null;
+      if ($id_sale == null) {
          $id_sale = !is_null($obPayment) ? $obPayment->id_sale : '';
       }
       $content =  View::render('pages/payment/form', [
          'readonly' => $id_sale ? 'readonly' : '',
-         // 'datalist' => is_null($obPayment) ? Costumer::getCostumerDataList() : self::getCostumerFromQueryParams($request),
          'option' => $title,
          'status' => $status,
-         'costumer_id' => $obPayment->id_costumer ?? '',
          'id_sale' => $id_sale,
          'payment_method' => $obPayment->payment_method ?? '',
          'id' => $obPayment->id ?? '',
          'value' => $obPayment->value ?? '',
-         'date' => !is_null($obPayment) ? date("d-m-Y", strtotime($obPayment->date)) : '',
+         'date' => !is_null($obPayment) ? date("Y-m-d", strtotime($obPayment->date)) : '',
          'payer' => $obPayment->payer ?? '',
          'checked' => !is_null($obPayment) ? is_null($obPayment->payer) ?? 'checked' : ''
 
@@ -100,19 +80,18 @@ class Payment extends Page
    {
       $status = !is_null($errorMessage) ?
          Alert::getError($errorMessage) : '';
-
       return self::getForm($request, $status, "Adicionar pagamento", null);
    }
 
    public static function validate($request, $obPayment)
    {
-
+      if(! EntitySale::getSaleById($obPayment->id_sale) instanceof EntitySale){
+         $status = Alert::getError("Venda com código: ".$obPayment->id_sale." não encontrada");
+         return self::getForm($request, $status, "Cadastrar pagamento");
+      }
       $obPayment->save();
       return self::getPayments($request, "Pagamento cadastrado com sucesso!");
    }
-
-
-
 
    public static function insertPayment($request)
    {
@@ -127,69 +106,63 @@ class Payment extends Page
    }
 
 
-   public static function setEditPayment($request, $id, $errorMessage = null)
-   {
+   // public static function setEditPayment($request, $id, $errorMessage = null)
+   // {
 
-      $status = !is_null($errorMessage) ?
-         Alert::getSuccess($errorMessage) : '';
+   //    $status = !is_null($errorMessage) ?
+   //       Alert::getSuccess($errorMessage) : '';
 
-      $obPayment = EntityPayment::getPaymentById($id);
-      if (!$obPayment instanceof EntityPayment) {
-         $request->getRouter()->redirect('/pages/Payment/Payments');
-      }
+   //    $obPayment = EntityPayment::getPaymentById($id);
+   //    if (!$obPayment instanceof EntityPayment) {
+   //       $request->getRouter()->redirect('/pages/Payment/Payments');
+   //    }
 
-      $postVars = $request->getPostVars();
-      $obPayment = EntityPayment::getPaymentById($id);
-      $obPayment->id_costumer = $postVars['id_costumer'] ?? $obPayment->id_costumer;
-      $obPayment->payment_method = $postVars['payment_method'] ?? $obPayment->payment_method;
-      $obPayment->value = $postVars['value'] ?? $obPayment->value;
-      $obPayment->date = $postVars['date'] ?? $obPayment->date;
-      $obPayment->payer = $postVars['payer'] ??  $obPayment->payer;
+   //    $postVars = $request->getPostVars();
+   //    $obPayment->id_sale = $postVars['id_sale'] ?? $obPayment->id_sale;
+   //    $obPayment->payment_method = $postVars['payment_method'] ?? $obPayment->payment_method;
+   //    $obPayment->value = $postVars['value'] ?? $obPayment->value;
+   //    $obPayment->date = $postVars['date'] ?? $obPayment->date;
+   //    $obPayment->payer = $postVars['payer'] ??  $obPayment->payer;
 
-
-
-      if ($obPayment->update()) {
-         return self::getPayments($request, "Pagamento atualizado com sucesso!");
-      } else {
-         $status = Alert::getError("Não foi possível editar!");
-         return self::getForm($request, $status, "Editar pagamento", $obPayment);
-      }
-   }
+   
+   //    if ($obPayment->update()) {
+   //       return self::getPayments($request, "Pagamento atualizado com sucesso!");
+   //    } else {
+   //       $status = Alert::getError("Não foi possível editar!");
+   //       return self::getForm($request, $status, "Editar pagamento", $obPayment);
+   //    }
+   // }
 
 
-   public static function getEditPayment($request, $id, $errorMessage = null)
-   {
+   // public static function getEditPayment($request, $id, $errorMessage = null)
+   // {
+   //    $status = !is_null($errorMessage) ?
+   //       Alert::getSuccess($errorMessage) : '';
 
-      $status = !is_null($errorMessage) ?
-         Alert::getSuccess($errorMessage) : '';
-
-      $obPayment = EntityPayment::getPaymentById($id);
-
-      if (!$obPayment instanceof EntityPayment) {
-         $request->getRouter()->redirect('/pages/Payment/Payments');
-      }
-
-      return self::getForm($request, $status, "Editar pgamento", $obPayment);
-   }
+   //    $obPayment = EntityPayment::getPaymentById($id);
+   //    if (!$obPayment instanceof EntityPayment) {
+   //       $request->getRouter()->redirect('/pages/Payment/Payments');
+   //    }
+   //    return self::getForm($request, $status, "Editar pagamento", $obPayment);
+   // }
 
    public static function searchPayments($request)
    {
-      $key = $request->getPostVars()['search'];
+      $key = $request->getPostVars()['search_id_sale'];
       return self::getPayments($request, null, $key);
    }
 
    public static function getDeletePayment($request, $id)
    {
       $obPayment = EntityPayment::getPaymentById($id);
-
-
-
       if (!$obPayment instanceof EntityPayment) {
          $request->getRouter()->redirect('/pages/Payment/Payments');
       }
 
+      (new Database('SALES'))->execute('UPDATE SALES SET LEFTFORPAY = LEFTFORPAY + '.$obPayment->value.' WHERE
+      id = '.$obPayment->id_sale);
+    
       if ($obPayment->delete($id)) {
-
          return self::getPayments($request, "Pagamento deletado com sucesso!");
       }
    }

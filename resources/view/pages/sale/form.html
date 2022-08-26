@@ -5,9 +5,7 @@
     let element = document.getElementById('payment_method')
     element.value = '{{payment_method}}'
     p = document.getElementById('id_products')
-    console.log(p.value)
     p.value = '{{id_product}}'
-    console.log(p.value)
 
   }
 
@@ -80,7 +78,8 @@
                     class="form-control"
                     name="discount[]"
                     value="{{discount}}"
-                    placeholder="Desconto"
+                    placeholder="Desconto (EM PORCENTAGEM)"
+                    min="0"
                     required
                   />
                 </td>

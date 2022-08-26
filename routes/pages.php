@@ -225,21 +225,21 @@ $obRouter-> post('/pagamentos', [
     }
 ]);
 
-$obRouter-> get('/pagamento/{id}/edit', [
-    'middlewares' => ['required-admin-login'],
+// $obRouter-> get('/pagamento/{id}/edit', [
+//     'middlewares' => ['required-admin-login'],
 
-    function($request, $id){
-        return new Response(200, Pages\Payment::getEditPayment($request, $id));
-    }
-]);
+//     function($request, $id){
+//         return new Response(200, Pages\Payment::getEditPayment($request, $id));
+//     }
+// ]);
 
-$obRouter-> post('/pagamento/{id}/edit', [
-    'middlewares' => ['required-admin-login'],
+// $obRouter-> post('/pagamento/{id}/edit', [
+//     'middlewares' => ['required-admin-login'],
 
-    function($request, $id){
-        return new Response(200, Pages\Payment::setEditPayment($request, $id));
-    }
-]);
+//     function($request, $id){
+//         return new Response(200, Pages\Payment::setEditPayment($request, $id));
+//     }
+// ]);
 
 $obRouter-> get('/pagamento/{id}/delete', [
     'middlewares' => ['required-admin-login'],
